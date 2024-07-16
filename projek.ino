@@ -2,6 +2,9 @@
 #include <FirebaseESP8266.h>
 #include <DallasTemperature.h>
 #include <OneWire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 #define FIREBASE_HOST "wahyu-b55e8-default-rtdb.firebaseio.com"
 #define FIREBASE_AUTH "VQRjG2UnOoiHyFZajEn68o1c5EuPdvA7cDaA7xon"
@@ -42,6 +45,9 @@ void setup() {
   Firebase.begin(&firebaseConfig, &firebaseAuth);
   Firebase.reconnectWiFi(true);
 
+  lcd.init();
+  lcd.backlight();
+
   pinMode(TRIGPIN, OUTPUT);
   pinMode(ECHOPIN, INPUT);
 
@@ -64,11 +70,17 @@ void loop() {
   float distance = duration / 2 * 0.0343; 
   Serial.print("Distance: ");
   Serial.println(distance);
+  lcd.setCursor(0, 0);
+  lcd.print("WaterLevel: ");
+  lcd.print(distance);
 
   sensorDS.requestTemperatures();
   float waterTemperature = sensorDS.getTempCByIndex(0);
   Serial.print("Water Temperature: ");
   Serial.println(waterTemperature);
+  lcd.setCursor(0, 0);
+  lcd.print("Temperature: ");
+  lcd.print(waterTemperature);
 
   if (Firebase.setFloat(firebaseData, "/Water_Level", distance)) {
     Serial.println("Water Level updated");
@@ -85,16 +97,16 @@ void loop() {
   }
 
   if (Firebase.getInt(firebaseData, "/Relay1")) {
-    digitalWrite(RELAY1, firebaseData.intData() ? HIGH : LOW);
+    digitalWrite(RELAY1, firebaseData.intData() ? LOW : HIGH);
   }
   if (Firebase.getInt(firebaseData, "/Relay2")) {
-    digitalWrite(RELAY2, firebaseData.intData() ? HIGH : LOW);
+    digitalWrite(RELAY2, firebaseData.intData() ?  LOW : HIGH);
   }
   if (Firebase.getInt(firebaseData, "/Relay3")) {
-    digitalWrite(RELAY3, firebaseData.intData() ? HIGH : LOW);
+    digitalWrite(RELAY3, firebaseData.intData() ? LOW : HIGH);
   }
   if (Firebase.getInt(firebaseData, "/Relay4")) {
-    digitalWrite(RELAY4, firebaseData.intData() ? HIGH : LOW);
+    digitalWrite(RELAY4, firebaseData.intData() ? LOW : HIGH);
   }
 
   delay(2000);

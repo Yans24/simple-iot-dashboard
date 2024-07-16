@@ -19,7 +19,7 @@
             "includePath": [
                 "C:\\Users\\Yans\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.2\\tools\\sdk\\include",
                 "C:\\Users\\Yans\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.2\\tools\\sdk\\lwip2\\include",
-                "C:\\Users\\Yans\\AppData\\Local\\Temp\\arduino\\sketches\\C9FE479A601C966F5DBF4F4E577DADD3\\core",
+                "C:\\Users\\Yans\\AppData\\Local\\Temp\\arduino\\sketches\\AE110E407343E75568ABE2FD0A647A54\\core",
                 "C:\\Users\\Yans\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.2\\cores\\esp8266",
                 "C:\\Users\\Yans\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.2\\variants\\nodemcu",
                 "C:\\Users\\Yans\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.2\\libraries\\ESP8266WiFi\\src",
@@ -31,6 +31,8 @@
                 "C:\\Users\\Yans\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.2\\libraries\\ESP8266SdFat\\src",
                 "C:\\Users\\Yans\\Documents\\Arduino\\libraries\\Arduino-Temperature-Control-Library-master",
                 "C:\\Users\\Yans\\Documents\\Arduino\\libraries\\OneWire-master",
+                "C:\\Users\\Yans\\Documents\\Arduino\\libraries\\LiquidCrystal_I2C-master",
+                "C:\\Users\\Yans\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\3.1.2\\libraries\\Wire",
                 "c:\\users\\yans\\appdata\\local\\arduino15\\packages\\esp8266\\tools\\xtensa-lx106-elf-gcc\\3.1.0-gcc10.3-e5f9fec\\xtensa-lx106-elf\\include\\c++\\10.3.0",
                 "c:\\users\\yans\\appdata\\local\\arduino15\\packages\\esp8266\\tools\\xtensa-lx106-elf-gcc\\3.1.0-gcc10.3-e5f9fec\\xtensa-lx106-elf\\include\\c++\\10.3.0\\xtensa-lx106-elf",
                 "c:\\users\\yans\\appdata\\local\\arduino15\\packages\\esp8266\\tools\\xtensa-lx106-elf-gcc\\3.1.0-gcc10.3-e5f9fec\\xtensa-lx106-elf\\include\\c++\\10.3.0\\backward",
