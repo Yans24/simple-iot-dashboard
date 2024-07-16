@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT Dashboard</title>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 90%;
+      margin: 0 auto;
+      margin-top: 50px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 60px;
+    }
+    .relay-control {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
+    .relay-control div {
+      text-align: center;
+    }
+    .relay-control button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      background-color: #dc3545;
+      color: white;
+      transition: background-color 0.3s;
+    }
+    .relay-label {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    .card {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .card h2 {
+      margin: 0;
+      color: #333;
+    }
+    .card p {
+      font-size: 24px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>IoT Dashboard</h1>
+    <div class="relay-control">
+      <div>
+        <div class="relay-label">Aerator</div>
+        <button id="relay1" onclick="toggleRelay(1)">OFF</button>
+      </div>
+      <div>
+        <div class="relay-label">Kipas</div>
+        <button id="relay2" onclick="toggleRelay(2)">OFF</button>
+      </div>
+      <div>
+        <div class="relay-label">Pompa Isi</div>
+        <button id="relay3" onclick="toggleRelay(3)">OFF</button>
+      </div>
+      <div>
+        <div class="relay-label">Pompa Kuras</div>
+        <button id="relay4" onclick="toggleRelay(4)">OFF</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Water Level</h2>
+      <p id="waterLevel">Loading...</p>
+    </div>
+    <div class="card">
+      <h2>Water Temperature</h2>
+      <p id="waterTemperature">Loading...</p>
+    </div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDCX6ykhaf9DPQ6dR9IBCWDZ13nft8PULw",
+      authDomain: "wahyu-b55e8.firebaseapp.com",
+      databaseURL: "https://wahyu-b55e8-default-rtdb.firebaseio.com",
+      projectId: "wahyu-b55e8",
+      storageBucket: "wahyu-b55e8.appspot.com",
+      messagingSenderId: "568165549825",
+      appId: "1:568165549825:web:93f1ada6cebc73f9927d00"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    function toggleRelay(relayNumber) {
+      const relayButton = document.getElementById(`relay${relayNumber}`);
+      const relayRef = firebase.database().ref(`/Relay${relayNumber}`);
+      relayRef.once('value').then(snapshot => {
+        const state = snapshot.val();
+        const newState = state === 1 ? 0 : 1;
+        relayRef.set(newState);
+        relayButton.style.backgroundColor = newState === 1 ? '#28a745' : '#dc3545';
+        relayButton.textContent = newState === 1 ? 'ON' : 'OFF';
+      });
+    }
+
+    const waterLevelElement = document.getElementById('waterLevel');
+    const waterTemperatureElement = document.getElementById('waterTemperature');
+
+    firebase.database().ref('/Water_Level').on('value', (snapshot) => {
+      const value = snapshot.val();
+      waterLevelElement.textContent = `${value} Cm`;
+    });
+
+    firebase.database().ref('/Water_Temperature').on('value', (snapshot) => {
+      const value = snapshot.val();
+      waterTemperatureElement.textContent = `${value} °C`;
+    });
+
+    for (let i = 1; i <= 4; i++) {
+      const relayButton = document.getElementById(`relay${i}`);
+      firebase.database().ref(`/Relay${i}`).once('value').then(snapshot => {
+        const state = snapshot.val();
+        relayButton.style.backgroundColor = state === 1 ? '#28a745' : '#dc3545';
+        relayButton.textContent = state === 1 ? 'ON' : 'OFF';
+      });
+    }
+  </script>
+</body>
+</html>
